@@ -4,10 +4,14 @@ let timerEl = document.querySelector('.timer');
 let startButtonEl = document.querySelector('.start-button');
 let questionBox = document.querySelector('.question-box');
 let answerBox = document.querySelector('.answer-box');
+let section = document.querySelector('.display-section');
+let highBox = document.querySelector('.high-box');
 
-let isWin = false;
+let isFinished = false;
 let number = 0;
 let secondLeft = 60;
+let highscore = [];
+let storedHighscore = JSON.parse(localStorage.getItem('Highscores'));
 let li1 = document.createElement("li");
 let li2 = document.createElement("li");
 let li3 = document.createElement("li");
@@ -33,7 +37,7 @@ let currentQuestion = questions[0];
 startButtonEl.addEventListener('click', startQuiz);
 
 
-
+//start the quiz
 function startQuiz(){
   console.log('Quiz started!');
   startButtonEl.disabled = true
@@ -41,21 +45,22 @@ function startQuiz(){
   displayQuestion();
 }
 
+//handle the timer, which also work as score
 function startTimer(){
   console.log('Timer started');
   let timerInterval = setInterval(() => {
     secondLeft--;
     timerEl.textContent = secondLeft;
     if(secondLeft >= 0){
-      if(isWin && secondLeft > 0){
+      if(isFinished && secondLeft > 0){
         clearInterval(timerInterval); 
-        winGame();
+        displayScore();
       }
     }
 
     if(secondLeft == 0){
       clearInterval(timerInterval);
-      loseGame();
+      displayScore();
     }
       
   }, 1000);
@@ -63,7 +68,7 @@ function startTimer(){
 
 
 
-
+//Dispay the question and answers on the screen
 function displayQuestion(){
    
   questionBox.textContent = questions[number].question;
@@ -79,13 +84,11 @@ function displayQuestion(){
 
   currentQuestion = questions[number];
   console.log('current question is '+ currentQuestion.question);
-  //number++;
-  //console.log('number: '+ number);
-  //if(number >= questions.length){
-   // winGame();
-  //}
   
+}
 
+function endGame(){
+  isFinished = true
 }
 
 function winGame(){
@@ -100,10 +103,37 @@ function loseGame(){
 
 }
 
-function checkWin(){
-  isWin = true
+function displayScore(){
+  clearScreen();
+  questionBox.textContent = 'Your score is ' + secondLeft;
   
+  let input = document.createElement('input');
+  input.setAttribute('class', 'input');
+
+  let saveButton = document.createElement('button');
+  saveButton.textContent = 'Save'
+
+  section.appendChild(input);
+  section.appendChild(saveButton);
+
+  saveButton.addEventListener('click', function(){
+      let username = input.value;
+      let score = secondLeft;
+      highscore.push(username +'  -  '+ score);
+      console.log(highscore.length);
+      localStorage.setItem('Highscores', JSON.stringify(highscore));
+      window.location.href = './highscores.html'
+  });
+  
+
 }
+
+function clearScreen(){
+  while(answerBox.firstChild){
+    answerBox.removeChild(answerBox.firstChild)
+  }
+}
+
 
 answerBox.addEventListener('click', function(event){
   let chosenAnswer = event.target.textContent;
@@ -117,15 +147,22 @@ answerBox.addEventListener('click', function(event){
     }else{
       displayQuestion();
       console.log('wrong answer was chosen');
+      secondLeft -= 10;
     }
 
   }else{
-    checkWin();
+    if(chosenAnswer === currentQuestion.correctAnswer){
+      console.log('correct answer was chosen.2');
+      endGame();
+      
+  
+    }else{
+      console.log('wrong answer was chosen');
+      secondLeft -= 10;
+      endGame();
+    }
   }
 
-
-
- 
 });
 
 
@@ -136,13 +173,13 @@ answerBox.addEventListener('click', function(event){
 //1-d display question and answers | done
 
 
-//2-when answer is chosen, check if correct, then display next question
-//2-a eventlistener answer
-//2-b is correct function
-//2-c display next question
+//2-when answer is chosen, check if correct, then display next question | done
+//2-a eventlistener answer |done
+//2-b is correct function |done
+//2-c display next question | done
 
-//3-when last quesiton answered or timer hit 0, end game and display result
-//3-a more question? if not, end game
-//3-b display result 
+//3-when last quesiton answered or timer hit 0, end game and display result |done
+//3-a more question? if not, end game | done
+//3-b display result | done
 
 //4-save result in local storage

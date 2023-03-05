@@ -1,3 +1,55 @@
+header {
+  background-color: beige;
+  text-align: center;
+}
+
+.menubar{
+  display: flex;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 30px;
+  
+}
+
+.start-button{
+  background-color: greenyellow;
+  color: rgb(71, 94, 114);
+  font-size: 25px;
+  font-weight: 600;
+  border-radius: 5px;
+}
+
+.timer{
+  font-size: xx-large;
+  
+}
+
+.highscores{
+  font-size: xx-large;
+  color: black;
+}
+
+.display-section, .high-display{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+li{
+  background-color: beige;
+  min-width: 300px;
+  margin: 5px;
+  
+}
+
+.question-box{
+  font-size: xx-large;
+}
+
+
+
 footer {
   padding: 30px;
   clear: both;
