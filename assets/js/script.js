@@ -11,7 +11,7 @@ let isFinished = false;
 let number = 0;
 let secondLeft = 60;
 let highscore = [];
-let storedHighscore = JSON.parse(localStorage.getItem('Highscores'));
+let storedHighscore = [];
 let li1 = document.createElement("li");
 let li2 = document.createElement("li");
 let li3 = document.createElement("li");
@@ -68,7 +68,7 @@ function startTimer(){
 
 
 
-//Dispay the question and answers on the screen
+//Display the question and answers on the screen
 function displayQuestion(){
    
   questionBox.textContent = questions[number].question;
@@ -117,15 +117,42 @@ function displayScore(){
   section.appendChild(saveButton);
 
   saveButton.addEventListener('click', function(){
-      let username = input.value;
-      let score = secondLeft;
-      highscore.push(username +'  -  '+ score);
-      console.log(highscore.length);
-      localStorage.setItem('Highscores', JSON.stringify(highscore));
-      window.location.href = './highscores.html'
+
+    let user = {
+      name: input.value,
+      score: secondLeft
+    }
+
+    storedHighscore = JSON.parse(localStorage.getItem('Highscores'));
+    if(storedHighscore == null){
+      storedHighscore = [];
+    }
+    storedHighscore.push(user);
+    
+    localStorage.setItem('Highscores', JSON.stringify(storedHighscore));
+    
+    window.location.href = './highscores.html'
+    console.log(document.URL());
+    
   });
   
 
+}
+
+function displayHighscores(){
+  storedHighscore = JSON.parse(localStorage.getItem('Highscores'));
+    if(storedHighscore == null){
+      storedHighscore = [];
+    }
+  
+  console.log('From the displayHighscores(). length is ' + storedHighscore.length);
+  for (let index = 0; index < storedHighscore.length; index++) {
+    
+    let li = document.createElement('li');
+    li.textContent = storedHighscore[index].name + '---' + storedHighscore[index].score;
+    highBox.appendChild(li);
+    
+  }
 }
 
 function clearScreen(){
@@ -164,7 +191,6 @@ answerBox.addEventListener('click', function(event){
   }
 
 });
-
 
 
 //1-a create timer | done
