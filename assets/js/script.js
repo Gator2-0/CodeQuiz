@@ -17,25 +17,43 @@ let li2 = document.createElement("li");
 let li3 = document.createElement("li");
 let li4 = document.createElement("li");
 
-const question1 = {
+//questions section
+const questions = [{
   question: 'What does CSS stand for?',
-  answers: ['Cascading style sheet','Cascading Styling sheet','something else','something else'],
+  answers: ['Cascading style sheet','Cascading Styling sheet','Consecutive Style Sheet','Consecutive styling sheet'],
   correctAnswer: 'Cascading style sheet'
-};
 
-const question2 = {
+},
+{
   question: 'What does HTML stand for?',
-  answers: ['Hyper Text Markup Language','Hyper textualise Meaningful Language','something else','something else'],
+  answers: ['Hyper Text Markup Language','Hyper textualise Meaningful Language','Hyper Text Made Up Language','None of the above'],
   correctAnswer: 'Hyper Text Markup Language'
-};
+
+},
+{
+  question: 'Complete the following: function = myFunction__{}',
+  answers: ['()','{}','[]','\'\''],
+  correctAnswer: '()'
+
+},
+{
+  question: 'What tag represents an Unordered List?',
+  answers: ['<ul>','<li>','<ol>','<dl>'],
+  correctAnswer: '<ul>'
+
+},
+{
+  question: 'What is the latest version of HTML?',
+  answers: ['3','4','5','6'],
+  correctAnswer: '5'
+
+}
 
 
-const questions = [question1,question2];
+]
 let currentQuestion = questions[0];
 
-
 startButtonEl.addEventListener('click', startQuiz);
-
 
 //start the quiz
 function startQuiz(){
@@ -58,7 +76,7 @@ function startTimer(){
       }
     }
 
-    if(secondLeft == 0){
+    if(secondLeft <= 0){
       clearInterval(timerInterval);
       displayScore();
     }
@@ -87,39 +105,36 @@ function displayQuestion(){
   
 }
 
+
 function endGame(){
   isFinished = true
 }
 
-function winGame(){
-  console.log('You won!!');
-  questionBox.textContent = 'You Won!!'
-
-}
-
-function loseGame(){  
-  console.log('you lost!!');
-  questionBox.textContent = 'Sorry better luck next time!'
-
-}
-
+//when the quiz finishes, display the score and asks for username to save in highscores.
 function displayScore(){
   clearScreen();
+  if(secondLeft < 0){
+    secondLeft = 0;
+  }
   questionBox.textContent = 'Your score is ' + secondLeft;
   
   let input = document.createElement('input');
   input.setAttribute('class', 'input');
+  input.setAttribute('placeholder','Type your name here');
 
   let saveButton = document.createElement('button');
-  saveButton.textContent = 'Save'
+  saveButton.setAttribute('class','save-button');
+  
+  saveButton.textContent = 'Save';
 
   section.appendChild(input);
   section.appendChild(saveButton);
 
   saveButton.addEventListener('click', function(){
-
+    //a space has been added to void problem with the getScore(). 
+    //the function separate the score from name using .split('---'), the extra space protect the split.
     let user = {
-      name: input.value,
+      name: input.value + ' ',
       score: secondLeft
     }
 
@@ -135,26 +150,9 @@ function displayScore(){
     console.log(document.URL());
     
   });
-  
-
 }
 
-function displayHighscores(){
-  storedHighscore = JSON.parse(localStorage.getItem('Highscores'));
-    if(storedHighscore == null){
-      storedHighscore = [];
-    }
-  
-  console.log('From the displayHighscores(). length is ' + storedHighscore.length);
-  for (let index = 0; index < storedHighscore.length; index++) {
-    
-    let li = document.createElement('li');
-    li.textContent = storedHighscore[index].name + '---' + storedHighscore[index].score;
-    highBox.appendChild(li);
-    
-  }
-}
-
+//remove the answers of the last question from the screen
 function clearScreen(){
   while(answerBox.firstChild){
     answerBox.removeChild(answerBox.firstChild)

@@ -1,33 +1,66 @@
-header {
-  background-color: beige;
+ /* affect all HMTL file*/
+body{
+  background-color: black;
+}
+
+h1, h2, p{
+  color: yellow;
+}
+
+a{
+  color: yellow;
+}
+
+/*in the header of all html pages*/
+header { 
   text-align: center;
 }
 
+.timer, .highscores{
+  width: 150px;
+  font-size: xx-large;
+  color: yellow; 
+}
+
+/*align the anchor, start button and timer*/
 .menubar{
   display: flex;
   justify-content: space-between;
   padding-left: 20px;
   padding-right: 20px;
   margin-bottom: 30px;
-  
 }
-
-.start-button{
-  background-color: greenyellow;
+/*for the start button, save button and clear highscores button*/
+button{
+  background-color: yellow;
   color: rgb(71, 94, 114);
   font-size: 25px;
   font-weight: 600;
   border-radius: 5px;
 }
 
-.timer{
-  font-size: xx-large;
-  
+button:hover{
+  cursor: pointer;
 }
 
-.highscores{
-  font-size: xx-large;
-  color: black;
+button:active{
+  background-color: rgb(71, 94, 114);
+  color: yellow;
+}
+
+
+/* for the input box where the user entewer their name*/
+.input{
+  margin: 10px;
+  height: 50px;
+  width: 300px;
+  border-style: dashed;
+  border-radius: 10px;
+  border-color: yellow;
+  border-width: 2px;
+  color: yellow;
+  font-size: x-large;
+  background-color: black;
 }
 
 .display-section, .high-display{
@@ -37,15 +70,40 @@ header {
 
 }
 
-li{
-  background-color: beige;
-  min-width: 300px;
-  margin: 5px;
-  
+/*allign the buttona and highscores lines */
+.high-box{
+  text-align: center;
 }
+
+/*for answers and highscores line items*/
+
+li{
+  color: yellow;
+  min-width: 300px;
+  height: 50px;
+  margin: 20px;
+  border-style: dashed;
+  border-radius: 10px;
+  border-width: 2px ;
+  border-color: yellow;
+  font-size: x-large;
+  text-align: center;
+}
+
+li:hover{
+  cursor: pointer;
+
+}
+
+li:active{
+  background-color: yellow;
+  color: black;
+}
+
 
 .question-box{
   font-size: xx-large;
+  
 }
 
 
